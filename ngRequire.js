@@ -1,6 +1,6 @@
 +(function(){
 
-define(['angularAMD'], function(){
+define(['angularAMD'], function(angularAMD){
 
 'use strict';
 
