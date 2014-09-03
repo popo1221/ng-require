@@ -9,6 +9,14 @@ It requires angularAMD (https://github.com/marcoslin/angularAMD) for registering
 
 
 Usage:
+```js
+   define(['angularAMD', 'ngRequire'], function(angularAMD) {
+   	var app = angular.module('app', ['ngRequire']);
+   	... // Setup app here. E.g.: run .config with $routeProvider
+   	return angularAMD.bootstrap.(app);
+   });
+```
+
 ```html
   <div ng-controller="MainCtrl as main" ng-require="MainCtrl">
     Choose:
