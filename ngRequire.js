@@ -1,6 +1,6 @@
 +(function(){
 
-define(['angularAMD'], function(angularAMD){
+define(function(){
 
 'use strict';
 
@@ -18,7 +18,7 @@ define(['angularAMD'], function(angularAMD){
  * <div doc-module-components="ngRequire"></div>
  */
  /* global -ngRequireModule */
-var ngRequireModule = angular.module('ngRequire', ['ng']).
+var ngRequireModule = angular.module('ngRequire', []).
                         directive('ngRequire', ngRequireFactory).
 						directive('ngRequire', ngRequireFillContentFactory);
 
@@ -74,7 +74,8 @@ var ngRequireModule = angular.module('ngRequire', ['ng']).
       </file>
   </example>
  */
-var ngRequireFactory = ['$animate', function($animate) {
+ngRequireFactory.$inject = ['$animate'];
+function ngRequireFactory($animate) {
   return {
     multiElement: true,
     transclude: 'element',
@@ -85,7 +86,7 @@ var ngRequireFactory = ['$animate', function($animate) {
     link: function ($scope, $element, $attr, ctrl, $transclude) {
 		if ($attr.ngRequire) {
 			require($attr.ngRequire.split(','), function(){
-				$scope.apply(update);
+				$scope.$apply(update);
 			});
 		} else {
 			update();
@@ -99,7 +100,7 @@ var ngRequireFactory = ['$animate', function($animate) {
 		}
     }
   };
-}];
+};
 
 // This directive is called during the $transclude call of the first `ngRequire` directive.
 // It will replace and compile the content of the element after the required resources loaded.
