@@ -40,10 +40,10 @@ Usage:
 
 ```js
 define(['angularAMD'], function(angularAMD){
-		angularAMD.controller('MainCtrl', MainCtrl);
-		
-		function MainCtrl() {
-			// MainCtrl codes.
-		}
-	   });
+	angularAMD.controller('MainCtrl', MainCtrl);
+	
+	function MainCtrl() {
+		// MainCtrl codes.
+	}
+});
 ```
