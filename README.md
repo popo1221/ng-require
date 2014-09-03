@@ -29,3 +29,13 @@ Usage:
     <pre>$routeParams = {{main.$routeParams}}</pre>
   </div>
 ```
+
+```js
+define(['angularAMD'], function(angularAMD){
+		angularAMD.controller('MainCtrl', MainCtrl);
+		
+		function MainCtrl() {
+			// MainCtrl codes.
+		}
+	   });
+```
