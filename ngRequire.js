@@ -83,55 +83,19 @@ var ngRequireFactory = ['$animate', function($animate) {
     restrict: 'A',
     $$tlb: true,
     link: function ($scope, $element, $attr, ctrl, $transclude) {
-        var block, childScope, previousElements, watchExpr;
-		
-		watchExpr = "$$RequiredResourcesLoaded";
-		
 		if ($attr.ngRequire) {
-			$scope.$watch(watchExpr, function ngRequireWatchAction(value) {
-				update(value);
-			});
-			
 			require($attr.ngRequire.split(','), function(){
-				$scope[watchExpr] = true;
-				$scope.apply();
+				$scope.apply(update);
 			});
 		} else {
-			update(true);
+			update();
 		}
 		
-		function update(value){
-			if (value) {
-				if (!childScope) {
-				  $transclude(function (clone, newScope) {
-					childScope = newScope;
-					clone[clone.length++] = document.createComment(' end ngRequire: ' + $attr.ngRequire + ' ');
-					// Note: We only need the first/last node of the cloned nodes.
-					// However, we need to keep the reference to the jqlite wrapper as it might be changed later
-					// by a directive with templateUrl when its template arrives.
-					block = {
-					  clone: clone
-					};
-					$animate.enter(clone, $element.parent(), $element);
-				  });
-				}
-			  } else {
-				if(previousElements) {
-				  previousElements.remove();
-				  previousElements = null;
-				}
-				if(childScope) {
-				  childScope.$destroy();
-				  childScope = null;
-				}
-				if(block) {
-				  previousElements = getBlockElements(block.clone);
-				  $animate.leave(previousElements, function() {
-					previousElements = null;
-				  });
-				  block = null;
-				}
-			  }
+		function update(){
+            $transclude(function (clone, newScope) {
+                clone[clone.length++] = document.createComment(' end ngRequire: ' + $attr.ngRequire + ' ');
+                $animate.enter(clone, $element.parent(), $element);
+            });
 		}
     }
   };
@@ -153,6 +117,5 @@ function ngRequireFillContentFactory($compile) {
     }
   };
 }
-
 });
 })();
