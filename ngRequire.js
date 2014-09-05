@@ -19,8 +19,7 @@ define(function(){
  */
  /* global -ngRequireModule */
 var ngRequireModule = angular.module('ngRequire', []).
-                        directive('ngRequire', ngRequireFactory).
-						directive('ngRequire', ngRequireFillContentFactory);
+                        directive('ngRequire', ngRequireFactory);
 
 
 /**
@@ -101,22 +100,5 @@ function ngRequireFactory($animate) {
     }
   };
 };
-
-// This directive is called during the $transclude call of the first `ngRequire` directive.
-// It will replace and compile the content of the element after the required resources loaded.
-// We need this directive so that the element content is already filled when
-// the link function of another directive on the same element as ngRequire
-// is called.
-ngRequireFillContentFactory.$inject = ['$compile'];
-function ngRequireFillContentFactory($compile) {
-  return {
-    restrict: 'A',
-    priority: -400,
-    link: function(scope, $element) {
-      var link = $compile($element.contents());
-      link(scope);
-    }
-  };
-}
 });
 })();
